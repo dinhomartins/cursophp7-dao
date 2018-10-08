@@ -2,9 +2,9 @@
 
 require_once("config.php");
 
-$sql = new sql();
+$sql = new Sql();
 
-$usuarios = $sql->select(" SELECT * FROM cad_aluno");
+$usuarios = $sql->select("SELECT * FROM usuarios");
 
 echo json_encode($usuarios);
 
