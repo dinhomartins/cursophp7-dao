@@ -2,24 +2,24 @@
 
 class Usuarios {
 
-	private $idusuario;
-	private $login;
+	private $id;
+	private $usuario;
 	private $senha;
 
-	public function getIdusuario(){
-		return $this->idusuario;
+	public function getId(){
+		return $this->id;
 	}
 
-	public function setIdusuario($value){
-		$this->idusuario = $value;
+	public function setId($value){
+		$this->id = $value;
 	}
 
-	public function getlogin(){
-		return $this->login;
+	public function getusuario(){
+		return $this->usuario;
 	}
 
-	public function setlogin($value){
-		$this->login = $value;
+	public function setusuario($value){
+		$this->usuario = $value;
 	}
 
 	public function getsenha(){
@@ -34,7 +34,27 @@ class Usuarios {
 
 		$sql = new sql();
 
-		$result = $sql->select("SELECT * FROM usuarios WHERE idusuario = ")
+		$result = $sql->select("SELECT * FROM usuarios WHERE id = :ID ", array(
+			":ID"=>$id
+			));
+		if(count($result) > 0 ){
+
+			$row = $result[0];
+
+			$this->setId($row['id']);
+			$this->setusuario($row['usuario']);
+			$this->setsenha(new DateTime($row['senha']));
+
+		}
+	}
+
+	public function __toString(){
+
+		return json_encode(array(
+				"id"=>$this->getId(),
+				"usuario"=>$this->getusuario(),
+				"senha"=>$this->getsenha()
+		));	
 	}
 
 }
